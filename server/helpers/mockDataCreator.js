@@ -6,7 +6,7 @@ import claimsModel from './../models/claimsModel';
 
 exports.mock100Records = () => {
     let newClaim;
-    // return new Promise((resolve) => {
+
     for (let i = 1; i < 10000; i++) {
         newClaim = new claimsModel({
             claim_id: 'mock_claim_id_' + i,
@@ -48,6 +48,5 @@ exports.mock100Records = () => {
         claimsHandler.create_claim(newClaim);
         console.log('record inserted ' + i);
     }
-    //     resolve();
-    // });
+
 };

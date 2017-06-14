@@ -26,7 +26,4 @@ exports.closeConnection = () => {
     db.close().then(() => {
         console.log('db disconnected');
     });
-    // mongoose.disconnect().then(() => {
-    //     console.log('db disconnected');
-    // });
 };
