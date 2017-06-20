@@ -41,10 +41,9 @@
         }
     },
     "plugins": [
-        "node"
+        "angular"
     ],
     "rules": {
-
         "no-var": 2,
         "prefer-const": 1,
         "no-shadow": 2,

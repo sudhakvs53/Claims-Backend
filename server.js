@@ -1,6 +1,6 @@
 // ========================== custom modules ==========================
 import { dev } from './server/config';
-import router from './server/router';
+import router from './server/fileRouter';
 import dbhelper from './server/helpers/dbhelper';
 
 // ========================== dependecy modules ==========================
@@ -18,9 +18,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // routing
 app.use(router);
 
+app.use('/assets', express.static(__dirname + '/node_modules'));
+app.use('/source', express.static(__dirname + '/src'));
+
 // open db connection, when successful start application
 dbhelper.openConnection().then(() => {
-    app.listen(8081, () => {
+    app.listen(dev.PORT, () => {
         console.log('server started');
     });
 });
@@ -28,6 +31,8 @@ dbhelper.openConnection().then(() => {
 // kill process when Ctrl+C is hit
 process.on('SIGINT', () => {
     dbhelper.closeConnection();
+    console.log('bye bye !');
+    process.exit();
 });
 
 export default app;
