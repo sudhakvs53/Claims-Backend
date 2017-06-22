@@ -56,6 +56,10 @@
             background: #2a3f54;
             color: white;
         }
+        
+        .app-constant-list {
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -81,9 +85,6 @@
 
         <ul class="nav nav-tabs justify-content-center nav-justified">
             <li class="nav-item">
-                <a class="nav-link custom-nav-link" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link custom-nav-link" href="#">Role Modification</a>
             </li>
             <li class="nav-item">
@@ -97,18 +98,50 @@
     </section>
 
     <section>
-        <ul>
-            <li ng-repeat="appConstant in adminController.application_constants_lst">
-                <span ng-click="adminController.get_app_constant_values(appConstant.name)">
-                    {{appConstant.name}}
-                    <ul ng-if="adminController.display_app_constant_lst.length > 0 && appConstant.name == ">
-                        <li ng-repeat="appConstVal in adminController.display_app_constant_lst">
-                            {{appConstVal}}
+
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <div class="col-xs-3">
+                    <ul>
+                        <li class="app-constant-list" ng-repeat="appConstant in adminController.application_constant_lst">
+                            <span ng-click="adminController.getAppConstantValues(appConstant.name)">
+                                {{appConstant.name}}
+                            </span>
                         </li>
                     </ul>
-                </span>
-            </li>
-        </ul>
+                </div>
+                <div class="col-xs-8 offset-1" ng-if="adminController.display_lst.visible == true">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <input id="addItemTextbox" class="form-control mx-sm-3" aria-describedby="addItemHelpline" type="text" placeholder="Add item to list..." />
+                                        <button class="btn btn-outline-primary" ng-click="adminController.addValueToAppConstant()">Add item</button>
+                                        <small id="addItemHelpline" class="text-muted">&nbsp;No validations, please ensure correct values are entered</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <ul>
+                                    <li ng-repeat="appConstantVal in adminController.display_lst.values">
+                                        <span>
+                                            {{appConstantVal}}
+                                            <!--<button class="" class="close" aria-label="Close">-->
+                                                <span style="cursor:pointer" aria-hidden="true" ng-click="adminController.deleteValueFromAppConstant(appConstantVal)">&times;</span>
+                                        <!--</button>-->
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
 
 

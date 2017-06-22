@@ -30,4 +30,16 @@ router.post('/insert_claim_formulas', (req, res) => {
     });
 });
 
+router.post('/set_application_constant_value', (req, res) => {
+    appConstantHandler.set_application_constant_value(req.body, (isSuccess) => {
+        res.send(isSuccess);
+    });
+});
+
+router.post('/del_application_constant_value', (req, res) => {
+    appConstantHandler.del_application_constant_value(req.body, (isSuccess) => {
+        res.send(isSuccess);
+    });
+});
+
 export default router;
