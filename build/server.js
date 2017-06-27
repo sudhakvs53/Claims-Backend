@@ -18,17 +18,23 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// ========================== dependecy modules ==========================
+// ========================== custom modules ==========================
 var app = (0, _express2.default)();
 
 // parsing req/res body to json
-// ========================== custom modules ==========================
+
+
+// ========================== dependecy modules ==========================
 app.use(_bodyParser2.default.json({ limit: '50mb' }));
 
 // for parsing the url encoded data using qs library
@@ -37,8 +43,8 @@ app.use(_bodyParser2.default.urlencoded({ limit: '50mb', extended: true }));
 // routing
 app.use(_fileRouter2.default);
 
-app.use('/assets', _express2.default.static(__dirname + '/node_modules'));
-app.use('/source', _express2.default.static(__dirname + '/src'));
+app.use('/assets', _express2.default.static(_path2.default.resolve('node_modules')));
+app.use('/source', _express2.default.static(_path2.default.resolve('src')));
 
 // open db connection, when successful start application
 _dbhelper2.default.openConnection().then(function () {

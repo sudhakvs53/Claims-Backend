@@ -5,6 +5,7 @@ import dbhelper from './helpers/dbhelper';
 
 // ========================== dependecy modules ==========================
 import bodyParser from 'body-parser';
+import path from 'path';
 import express from 'express';
 const app = express();
 
@@ -18,8 +19,8 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // routing
 app.use(router);
 
-app.use('/assets', express.static(__dirname + '/node_modules'));
-app.use('/source', express.static(__dirname + '/src'));
+app.use('/assets', express.static(path.resolve('node_modules')));
+app.use('/source', express.static(path.resolve('src')));
 
 // open db connection, when successful start application
 dbhelper.openConnection().then(() => {
