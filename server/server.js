@@ -1,6 +1,6 @@
 // ========================== custom modules ==========================
 import { dev } from './config';
-import router from './fileRouter';
+import router from './apiRouter';
 import dbhelper from './helpers/dbhelper';
 
 // ========================== dependecy modules ==========================
@@ -19,8 +19,9 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // routing
 app.use(router);
 
+
 app.use('/assets', express.static(path.resolve('node_modules')));
-app.use('/source', express.static(path.resolve('src')));
+
 
 // open db connection, when successful start application
 dbhelper.openConnection().then(() => {

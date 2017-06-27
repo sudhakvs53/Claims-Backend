@@ -1,14 +1,9 @@
 import express from 'express';
 import claimsHandler from './handlers/claimsHandler';
-import appConstantHandler from './handlers/appConstantHandler';
+
 
 const router = express.Router();
 
-router.get('/get_application_constants', (req, res) => {
-    appConstantHandler.get_application_constants((data) => {
-        res.json(data);
-    });
-});
 
 router.get('/get_all_claims', (req, res) => {
 
@@ -36,16 +31,5 @@ router.post('/insert_claim_substantiations', (req, res) => {
     });
 });
 
-router.post('/set_application_constant_value', (req, res) => {
-    appConstantHandler.set_application_constant_value(req.body, (isSuccess) => {
-        res.send(isSuccess);
-    });
-});
-
-router.post('/del_application_constant_value', (req, res) => {
-    appConstantHandler.del_application_constant_value(req.body, (isSuccess) => {
-        res.send(isSuccess);
-    });
-});
 
 export default router;
