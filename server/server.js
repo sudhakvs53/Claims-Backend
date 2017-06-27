@@ -32,8 +32,8 @@ dbhelper.openConnection().then(() => {
 
 // kill process when Ctrl+C is hit
 process.on('SIGINT', () => {
+    console.log('bye bye !');
     dbhelper.closeConnection(() => {
-        console.log('bye bye !');
         process.exit();
     });
 });

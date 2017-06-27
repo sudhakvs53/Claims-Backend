@@ -10,7 +10,7 @@ db.on('error', () => {
 });
 
 exports.openConnection = () => {
-    return mongoose.connect(dburl, (err) => {
+    return mongoose.connect(dburl, { useMongoClient: true }, (err) => {
         if (err) {
             return console.log('err while connecting to db ' + err);
         } else {
