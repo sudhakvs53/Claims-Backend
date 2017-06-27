@@ -5,4 +5,6 @@ package-lock.json
 /node_modules
 npm-debug.log
 .babelrc
-/server
+
+# alter the following folder between server and build while pushing code to git or heroku respectively
+/build
