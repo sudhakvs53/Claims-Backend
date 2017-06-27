@@ -24,7 +24,7 @@ app.use('/source', express.static(path.resolve('src')));
 
 // open db connection, when successful start application
 dbhelper.openConnection().then(() => {
-    app.listen(dev.PORT, () => {
+    app.listen(process.env.PORT || dev.PORT, () => {
         console.log('server started');
     });
 });

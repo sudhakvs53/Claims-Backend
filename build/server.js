@@ -48,7 +48,7 @@ app.use('/source', _express2.default.static(_path2.default.resolve('src')));
 
 // open db connection, when successful start application
 _dbhelper2.default.openConnection().then(function () {
-    app.listen(_config.dev.PORT, function () {
+    app.listen(process.env.PORT || _config.dev.PORT, function () {
         console.log('server started');
     });
 });
