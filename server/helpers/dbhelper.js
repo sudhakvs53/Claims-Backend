@@ -19,8 +19,9 @@ exports.openConnection = () => {
     });
 };
 
-exports.closeConnection = () => {
+exports.closeConnection = (callback) => {
     db.close().then(() => {
         console.log('db disconnected');
+        callback();
     });
 };

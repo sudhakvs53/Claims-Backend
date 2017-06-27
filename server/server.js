@@ -1,7 +1,7 @@
 // ========================== custom modules ==========================
-import { dev } from './server/config';
-import router from './server/fileRouter';
-import dbhelper from './server/helpers/dbhelper';
+import { dev } from './config';
+import router from './fileRouter';
+import dbhelper from './helpers/dbhelper';
 
 // ========================== dependecy modules ==========================
 import bodyParser from 'body-parser';
@@ -30,9 +30,10 @@ dbhelper.openConnection().then(() => {
 
 // kill process when Ctrl+C is hit
 process.on('SIGINT', () => {
-    dbhelper.closeConnection();
-    console.log('bye bye !');
-    process.exit();
+    dbhelper.closeConnection(() => {
+        console.log('bye bye !');
+        process.exit();
+    });
 });
 
 export default app;
