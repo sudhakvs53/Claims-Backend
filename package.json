@@ -4,7 +4,7 @@
     "description": "claims management application API server",
     "main": "server.js",
     "scripts": {
-        "start": "nodemon server/server.js --exec babel-node",
+        "start": "node ./build/server.js",
         "dev:start": "nodemon server/server.js --exec babel-node",
         "build:start": "node ./build/server.js",
         "clean": "rmdir /s build && mkdir build",
