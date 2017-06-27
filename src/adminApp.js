@@ -4,7 +4,7 @@
 
     angular.module('adminApp').controller('adminBodyController', adminBodyController);
 
-    function adminBodyController($http, $scope) {
+    function adminBodyController($http) {
         const vm = this;
 
         // controller methods
@@ -38,6 +38,7 @@
 
         function addValueToAppConstant() {
             const value_item = angular.element('#addItemTextbox').val();
+            angular.element('#addItemTextbox').val('');
             $http({
                 method: 'POST',
                 url: '/set_application_constant_value',
@@ -47,14 +48,13 @@
                 }
             }).then(function(response) {
                 if (response.data == true) {
-                    window.nacho = vm.display_lst.values;
+
                     vm.display_lst.values.push(value_item);
-                    vm.application_constant_lst.forEach(function(item) {
-                        if (vm.display_lst.name == item.name) {
-                            item.values.push(value_item);
-                        }
-                    });
-                    $scope.$digest();
+                    // vm.application_constant_lst.forEach(function(item) {
+                    //     if (vm.display_lst.name == item.name) {
+                    //         item.values.push(value_item);
+                    //     }
+                    // });
                 } else {
                     alert('update failed');
                 }
@@ -73,12 +73,11 @@
             }).then(function(response) {
                 if (response.data == true) {
                     vm.display_lst.values.pop(value_item);
-                    vm.application_constant_lst.forEach(function(item) {
-                        if (vm.display_lst.name == item.name) {
-                            item.values.pop(value_item);
-                        }
-                    });
-                    $scope.$digest();
+                    // vm.application_constant_lst.forEach(function(item) {
+                    //     if (vm.display_lst.name == item.name) {
+                    //         item.values.pop(value_item);
+                    //     }
+                    // });
                 } else {
                     alert('update failed');
                 }
@@ -102,6 +101,6 @@
 
     }
 
-    adminBodyController.$inject = ['$http', '$scope'];
+    adminBodyController.$inject = ['$http'];
 
 })();

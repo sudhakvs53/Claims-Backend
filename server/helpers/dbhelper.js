@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { dev } from './../config';
-const dburl = dev.dbUrl.abinashLocalDBurl;
+const dburl = dev.dbUrl.abinashLocalDBurl; //mLabDBurl for cloud connection
 
 const db = mongoose.connection;
 mongoose.Promise = global.Promise;
@@ -20,7 +20,6 @@ exports.openConnection = () => {
 };
 
 exports.closeConnection = () => {
-    console.log('here');
     db.close().then(() => {
         console.log('db disconnected');
     });

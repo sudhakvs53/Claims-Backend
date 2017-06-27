@@ -4,6 +4,7 @@
     "description": "claims management application API server",
     "main": "server.js",
     "scripts": {
+        "start": "npm run dev:start",
         "dev:start": "nodemon server.js --exec babel-node --presets es2015"
     },
     "keywords": [

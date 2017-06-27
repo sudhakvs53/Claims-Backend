@@ -30,6 +30,12 @@ router.post('/insert_claim_formulas', (req, res) => {
     });
 });
 
+router.post('/insert_claim_substantiations', (req, res) => {
+    claimsHandler.insert_claim_substantiations(req.body, () => {
+        res.sendStatus(200);
+    });
+});
+
 router.post('/set_application_constant_value', (req, res) => {
     appConstantHandler.set_application_constant_value(req.body, (isSuccess) => {
         res.send(isSuccess);

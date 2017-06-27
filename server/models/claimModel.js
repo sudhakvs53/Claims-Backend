@@ -24,6 +24,12 @@ const claimSchema = new schema({
         prod_name: { type: String },
         proj_name: { type: String }
     }],
+    substantiation: [{
+        reason: { type: String, required: true },
+        supp_doc_id: [{
+            file_name: { type: String }
+        }]
+    }],
     approved_by: { type: String },
     approved_on: { type: Date },
     // comments: [{

@@ -3,6 +3,7 @@ import claimModel from './../models/claimModel';
 export default {
     insert_claim_details,
     insert_claim_formulas,
+    insert_claim_substantiations,
     get_all_claims
 };
 
@@ -45,6 +46,18 @@ function insert_claim_formulas(reqData, callback) {
         callback();
     }).catch((err) => {
         console.log('err while inserting formula for claim id ' + reqData.claim_id + ' and err ' + err);
+    });
+}
+
+function insert_claim_substantiations(reqData, callback) {
+    let substantiation_to_insert = [];
+    reqData.substantiation.forEach(function(item) {
+        substantiation_to_insert.push(item);
+    });
+    claimModel.findOneAndUpdate({ _id: reqData.claim_id }, { $set: { substantiation: substantiation_to_insert } }).then(() => {
+        callback();
+    }).catch((err) => {
+        console.log('err while inserting substantiation for claim id ' + reqData.claim_id + ' and err ' + err);
     });
 }
 

@@ -10,10 +10,10 @@ const app = express();
 
 
 // parsing req/res body to json
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 
 // for parsing the url encoded data using qs library
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // routing
 app.use(router);
