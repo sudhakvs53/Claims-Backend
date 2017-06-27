@@ -8,7 +8,7 @@ var _config = require('./../config');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var dburl = _config.dev.dbUrl.abinashLocalDBurl; //mLabDBurl for cloud connection
+var dburl = _config.dev.dbUrl.mLabDBurl; //abinashLocalDBurl for local, mLabDBurl cloud connection
 
 var db = _mongoose2.default.connection;
 _mongoose2.default.Promise = global.Promise;
