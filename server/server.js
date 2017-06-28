@@ -1,6 +1,6 @@
 // ========================== custom modules ==========================
 import { dev } from './config';
-import router from './apiRouter';
+import router from './commonRouter';
 import dbhelper from './helpers/dbhelper';
 
 // ========================== dependecy modules ==========================

@@ -1,4 +1,9 @@
-export const dev = {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var dev = exports.dev = {
     PORT: 8081,
     dbUrl: {
         mLabDBurl: 'mongodb://dev:dev@ds143201.mlab.com:43201/claimsdb',
@@ -7,6 +12,6 @@ export const dev = {
     }
 };
 
-export const qa = {};
+var qa = exports.qa = {};
 
-export const prod = {};
+var prod = exports.prod = {};

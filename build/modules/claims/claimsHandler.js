@@ -1,15 +1,25 @@
-import claimModel from './../models/claimModel';
+'use strict';
 
-export default {
-    insert_claim_details,
-    insert_claim_formulas,
-    insert_claim_substantiations,
-    get_all_claims
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _claimModel = require('./claimModel');
+
+var _claimModel2 = _interopRequireDefault(_claimModel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    insert_claim_details: insert_claim_details,
+    insert_claim_formulas: insert_claim_formulas,
+    insert_claim_substantiations: insert_claim_substantiations,
+    get_all_claims: get_all_claims
 };
 
 
 function insert_claim_details(reqData, callback) {
-    const newClaim = new claimModel({
+    var newClaim = new _claimModel2.default({
         claim_name: reqData.claim_name,
         claim_type: reqData.claim_type,
         prod_form_name: reqData.prod_form_name,
@@ -28,43 +38,42 @@ function insert_claim_details(reqData, callback) {
         mod_by: reqData.mod_by
     });
 
-    newClaim.save().then((resData) => {
+    newClaim.save().then(function (resData) {
         callback(resData.id);
-    }).catch((err) => {
+    }).catch(function (err) {
         console.log('err while inserting claim ' + err);
         callback(false);
     });
-
 }
 
 function insert_claim_formulas(reqData, callback) {
-    let formula_to_insert = [];
-    reqData.formula.forEach(function(item) {
+    var formula_to_insert = [];
+    reqData.formula.forEach(function (item) {
         formula_to_insert.push(item);
     });
-    claimModel.findOneAndUpdate({ _id: reqData.claim_id }, { $set: { formula: formula_to_insert } }).then(() => {
+    _claimModel2.default.findOneAndUpdate({ _id: reqData.claim_id }, { $set: { formula: formula_to_insert } }).then(function () {
         callback();
-    }).catch((err) => {
+    }).catch(function (err) {
         console.log('err while inserting formula for claim id ' + reqData.claim_id + ' and err ' + err);
     });
 }
 
 function insert_claim_substantiations(reqData, callback) {
-    let substantiation_to_insert = [];
-    reqData.substantiation.forEach(function(item) {
+    var substantiation_to_insert = [];
+    reqData.substantiation.forEach(function (item) {
         substantiation_to_insert.push(item);
     });
-    claimModel.findOneAndUpdate({ _id: reqData.claim_id }, { $set: { substantiation: substantiation_to_insert } }).then(() => {
+    _claimModel2.default.findOneAndUpdate({ _id: reqData.claim_id }, { $set: { substantiation: substantiation_to_insert } }).then(function () {
         callback();
-    }).catch((err) => {
+    }).catch(function (err) {
         console.log('err while inserting substantiation for claim id ' + reqData.claim_id + ' and err ' + err);
     });
 }
 
 function get_all_claims(callback) {
-    claimModel.find({}).then((data) => {
+    _claimModel2.default.find({}).then(function (data) {
         callback(data);
-    }).catch((err) => {
+    }).catch(function (err) {
         console.log('err while fetching all claims ' + err);
     });
 }

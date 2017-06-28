@@ -7,4 +7,4 @@ npm-debug.log
 .babelrc
 
 # alter the following folder between server and build while pushing code to git or heroku respectively
-/build
+/server

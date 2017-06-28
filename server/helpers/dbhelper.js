@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { dev } from './../config';
-const dburl = dev.dbUrl.abinashLocalDBurl; //abinashLocalDBurl for local, mLabDBurl for cloud connection
+const dburl = dev.dbUrl.mongoAtlasURL; //abinashLocalDBurl for local, mLabDBurl for cloud connection, mongoAtlasURL for latest cloud
 
 const db = mongoose.connection;
 mongoose.Promise = global.Promise;
@@ -9,7 +9,12 @@ db.on('error', () => {
     console.log('error while communicating to database ');
 });
 
-exports.openConnection = () => {
+export default {
+    openConnection,
+    closeConnection
+};
+
+function openConnection() {
     return mongoose.connect(dburl, { useMongoClient: true }, (err) => {
         if (err) {
             return console.log('err while connecting to db ' + err);
@@ -17,11 +22,11 @@ exports.openConnection = () => {
             console.log('db connected');
         }
     });
-};
+}
 
-exports.closeConnection = (callback) => {
+function closeConnection(callback) {
     db.close().then(() => {
         console.log('db disconnected');
         callback();
     });
-};
+}
