@@ -19,12 +19,13 @@ exports.default = {
 
 
 function create_userFavorite(reqData, callback) {
-    var newUserFavorite = new _favoriteModel2.default({
+    var newFavorite = new _favoriteModel2.default({
         user_id: reqData.user_id,
         user_favorites: reqData.user_favorites
     });
-
-    newUserFavorite.save().then(function (resData) {
+    console.log(2);
+    newFavorite.save().then(function (resData) {
+        console.log(3);
         callback(resData);
     }).catch(function (err) {
         console.log('err while insert_userFavorite call ' + err);
@@ -33,9 +34,7 @@ function create_userFavorite(reqData, callback) {
 }
 
 function get_userFavorites(reqData, callback) {
-    console.log(2);
     _favoriteModel2.default.find({ user_id: reqData.user_id }).then(function (resData) {
-        console.log(3);
         callback(resData);
     }).catch(function (err) {
         console.log('err while get_userFavorite call ' + err);

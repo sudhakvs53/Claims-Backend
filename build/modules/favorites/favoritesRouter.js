@@ -15,13 +15,14 @@ var _favoriteHandler2 = _interopRequireDefault(_favoriteHandler);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _commentsRouter2.default.post('/create_userFavorite', function (req, res) {
+    console.log(1);
     _favoriteHandler2.default.create_userFavorite(req.body, function (isSuccess) {
+        console.log(isSuccess);
         if (isSuccess) res.sendStatus(200);
     });
 });
 
 _commentsRouter2.default.get('/get_userFavorites', function (req, res) {
-    console.log(1);
     _favoriteHandler2.default.get_userFavorites({ user_id: req.get('user_id') }, function (resData) {
         res.json(resData);
     });
