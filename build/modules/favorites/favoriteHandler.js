@@ -33,7 +33,9 @@ function create_userFavorite(reqData, callback) {
 }
 
 function get_userFavorites(reqData, callback) {
+    console.log(2);
     _favoriteModel2.default.find({ user_id: reqData.user_id }).then(function (resData) {
+        console.log(3);
         callback(resData);
     }).catch(function (err) {
         console.log('err while get_userFavorite call ' + err);

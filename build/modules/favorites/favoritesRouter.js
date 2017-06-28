@@ -21,6 +21,7 @@ _commentsRouter2.default.post('/create_userFavorite', function (req, res) {
 });
 
 _commentsRouter2.default.get('/get_userFavorites', function (req, res) {
+    console.log(1);
     _favoriteHandler2.default.get_userFavorites({ user_id: req.get('user_id') }, function (resData) {
         res.json(resData);
     });
