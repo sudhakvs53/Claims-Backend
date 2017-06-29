@@ -1,25 +1,14 @@
-'use strict';
+import mongoose from 'mongoose';
+const schema = mongoose.Schema;
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _mongoose = require('mongoose');
-
-var _mongoose2 = _interopRequireDefault(_mongoose);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var schema = _mongoose2.default.Schema;
-
-var claimSchema = new schema({
+const claimSchema = new schema({
     claim_id: { type: String, required: true },
     claim_name: { type: String, required: true },
     benefit_area_name: { type: String, required: true },
     proj_title: { type: String, required: true },
     region: [{
         region_id: { type: String, required: true, unique: true },
-        region_name: { type: String }
+        region_name: { type: String },
     }],
     exception: { type: String },
     formula: [{
@@ -46,6 +35,6 @@ var claimSchema = new schema({
     mod_dt: { type: Date }
 });
 
-var claimModel = _mongoose2.default.model('claim', claimSchema);
+const claimModel = mongoose.model('claim', claimSchema);
 
-exports.default = claimModel;
+export default claimModel;
