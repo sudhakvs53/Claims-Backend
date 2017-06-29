@@ -4,12 +4,14 @@
     "description": "claims management application API server",
     "main": "server.js",
     "scripts": {
-        "start": "node ./build/server.js",
+        "start": "nodemon server/server.js --exec babel-node",
         "dev:start": "nodemon server/server.js --exec babel-node",
-        "build:start": "node ./build/server.js",
-        "clean": "rmdir /s build && mkdir build",
+        "prod:start": "node ./build/server.js",
         "build-server": "babel server -d build",
-        "build": "npm run clean && npm run build-server"
+        "windows:clean": "rmdir /s build && mkdir build",
+        "linux:clean": "rm -rf build && mkdir build",
+        "windows:build": "npm run windows:clean && npm run build-server",
+        "linux:build": "npm run linux:clean && npm run build-server"
     },
     "keywords": [
         "claims",
