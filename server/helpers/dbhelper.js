@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { dev } from './../config';
-const dburl = dev.dbUrl.mongoAtlasURL; //abinashLocalDBurl for local, mLabDBurl for cloud connection, mongoAtlasURL for latest cloud
+const dburl = dev.dbUrl.mongoAtlasURL; //localDBUrl for local, mLabDBurl for cloud connection, mongoAtlasURL for latest cloud
 
 const db = mongoose.connection;
 mongoose.Promise = global.Promise;

@@ -6,12 +6,12 @@
     "scripts": {
         "start": "nodemon server/server.js --exec babel-node",
         "dev:start": "nodemon server/server.js --exec babel-node",
-        "prod:start": "node ./build/server.js",
+        "aws:start": "node ./build/server.js",
         "build-server": "babel server -d build",
         "windows:clean": "rmdir /s build && mkdir build",
-        "linux:clean": "rm -rf build && mkdir build",
+        "aws:clean": "rm -rf build && mkdir build",
         "windows:build": "npm run windows:clean && npm run build-server",
-        "linux:build": "npm run linux:clean && npm run build-server"
+        "aws:build": "npm run aws:clean && npm run build-server"
     },
     "keywords": [
         "claims",

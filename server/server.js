@@ -1,11 +1,10 @@
 // ========================== custom modules ==========================
 import { dev } from './config';
-import router from './commonRouter';
+import routes from './routes';
 import dbhelper from './helpers/dbhelper';
 
 // ========================== dependecy modules ==========================
 import bodyParser from 'body-parser';
-import path from 'path';
 import express from 'express';
 const app = express();
 
@@ -16,12 +15,8 @@ app.use(bodyParser.json({ limit: '50mb' }));
 // for parsing the url encoded data using qs library
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-// routing
-app.use(router);
-
-
-app.use('/assets', express.static(path.resolve('node_modules')));
-
+// pass app object to routes method for registering routes
+routes(app);
 
 // open db connection, when successful start application
 dbhelper.openConnection().then(() => {
@@ -37,5 +32,3 @@ process.on('SIGINT', () => {
         process.exit();
     });
 });
-
-export default app;
