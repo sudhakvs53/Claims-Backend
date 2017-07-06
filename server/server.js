@@ -4,8 +4,8 @@ import routes from './routes';
 import dbhelper from './helpers/dbhelper';
 
 // ========================== dependecy modules ==========================
-import cluster from 'cluster';
-const numCPUs = require('os').cpus().length;
+// import cluster from 'cluster';
+// const numCPUs = require('os').cpus().length;
 
 import bodyParser from 'body-parser';
 import express from 'express';
@@ -21,38 +21,38 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // pass app object to routes method for registering routes
 routes(app);
 
-if (cluster.isMaster) {
+// if (cluster.isMaster) {
 
-    console.log(`Master ${process.pid} is running, number of workers ${numCPUs}`);
+//     console.log(`Master ${process.pid} is running, number of workers ${numCPUs}`);
 
-    for (let i = 0; i < numWorkers; i++) {
-        cluster.fork();
-    }
+//     for (let i = 0; i < numWorkers; i++) {
+//         cluster.fork();
+//     }
 
-    cluster.on('online', (worker) => {
-        console.log(`Worker ${worker.process.pid} is online`);
+//     cluster.on('online', (worker) => {
+//         console.log(`Worker ${worker.process.pid} is online`);
+//     });
+
+//     cluster.on('exit', (worker, code, signal) => {
+//         console.log(`Worker ${worker.process.pid} died with code ${code} and signal ${signal} `);
+//         console.log('Staring a new worker');
+//         cluster.fork();
+//     });
+// } else {
+// open db connection, when successful start application
+dbhelper.openConnection().then(() => {
+    app.listen(dev.PORT, () => {
+        console.log(`server started ${dev.PORT} `);
+        console.log(`Worker ${process.pid} started `);
     });
+});
 
-    cluster.on('exit', (worker, code, signal) => {
-        console.log(`Worker ${worker.process.pid} died with code ${code} and signal ${signal} `);
-        console.log('Staring a new worker');
-        cluster.fork();
+// kill process when Ctrl+C is hit
+process.on('SIGINT', () => {
+    console.log('bye bye !');
+    dbhelper.closeConnection(() => {
+        process.exit();
     });
-} else {
-    // open db connection, when successful start application
-    dbhelper.openConnection().then(() => {
-        app.listen(dev.PORT, () => {
-            console.log(`server started ${dev.PORT} `);
-            console.log(`Worker ${process.pid} started `);
-        });
-    });
+});
 
-    // kill process when Ctrl+C is hit
-    process.on('SIGINT', () => {
-        console.log('bye bye !');
-        dbhelper.closeConnection(() => {
-            process.exit();
-        });
-    });
-
-}
+// }
