@@ -26,8 +26,6 @@ if (cluster.isMaster) {
     });
 
 } else {
-    require('./server');
-
     process.on("SIGUSR2", () => {
         console.log(`SIGUSR2 received, reloading workers`);
 
@@ -55,4 +53,7 @@ if (cluster.isMaster) {
         };
         restart();
     });
+
+    require('./server');
+
 }
