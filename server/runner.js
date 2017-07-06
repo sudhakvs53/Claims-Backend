@@ -16,6 +16,18 @@ if (cluster.isMaster) {
         console.log(`Worker with process id ${worker.process.pid} is online `);
     });
 
+
+    cluster.on('exit', (worker, code, signal) => {
+        if (code != 0) {
+            console.log(`Worker ${worker.process.pid} died with code ${code} and signal ${signal} `);
+            // console.log(`Starting a new worker `);
+            // cluster.fork();
+        }
+    });
+
+} else {
+    require('./server');
+
     process.on("SIGUSR2", () => {
         console.log(`SIGUSR2 received, reloading workers`);
 
@@ -43,15 +55,4 @@ if (cluster.isMaster) {
         };
         restart();
     });
-
-    cluster.on('exit', (worker, code, signal) => {
-        if (code != 0) {
-            console.log(`Worker ${worker.process.pid} died with code ${code} and signal ${signal} `);
-            // console.log(`Starting a new worker `);
-            // cluster.fork();
-        }
-    });
-
-} else {
-    require('./server');
 }
