@@ -4,14 +4,16 @@
     "description": "claims management application API server",
     "main": "server.js",
     "scripts": {
-        "start": "nodemon server/server.js --exec babel-node",
-        "dev:start": "nodemon server/server.js --exec babel-node",
+        "start": "nodemon server/runner.js --exec babel-node",
+        "test-start": "babel-node server/runner.js --exec node",
         "aws:start": "node ./build/server.js",
         "build-server": "babel server -d build",
         "windows:clean": "rmdir /s build && mkdir build",
         "aws:clean": "rm -rf build && mkdir build",
         "windows:build": "npm run windows:clean && npm run build-server",
-        "aws:build": "npm run aws:clean && npm run build-server"
+        "aws:build": "npm run aws:clean && npm run build-server",
+        "build": "npm run windows:clean && npm run build-server",
+        "debug": "node_modules/babel-cli/bin/babel-node.js --debug --presets es2015 -- server.js --debug"
     },
     "keywords": [
         "claims",
@@ -28,16 +30,20 @@
         "angular": "^1.6.4",
         "body-parser": "^1.17.2",
         "bootstrap": "^4.0.0-alpha.6",
+        "cluster": "^0.7.7",
         "express": "^4.15.3",
         "font-awesome": "^4.7.0",
         "jquery": "^3.2.1",
         "lodash": "^4.17.4",
         "mongoose": "^4.10.6",
+        "os": "^0.1.1",
         "tether": "^1.4.0"
     },
     "devDependencies": {
         "babel-eslint": "^7.2.3",
         "babel-preset-es2015": "^6.24.1",
+        "babel-register": "^6.24.1",
+        "debug": "^2.6.8",
         "eslint": "^4.0.0",
         "eslint-plugin-angular": "^2.5.0",
         "eslint-plugin-node": "^5.0.0",

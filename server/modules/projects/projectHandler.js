@@ -1,42 +1,23 @@
 import projectModel from './projectModel';
 
 export default {
-    get_all_projects,
+    create_project,
+    get_all_projectTitles,
     check_project,
     delete_project,
-    insert_project
+    update_project_status,
+    check_dirty_status
 };
 
-function get_all_projects(callback) {
-    projectModel.find({}).then((data) => {
-        callback(data);
-    }).catch((err) => {
-        console.log('err in get_projects ' + err);
-    });
-}
 
-function check_project(reqData) {
-    return projectModel.find({
-        project_title: reqData.project_title,
-        prod_form: reqData.prod_form,
-        need_state: reqData.need_state,
-        claim_type: reqData.claim_type
-    });
-}
-
-function delete_project(reqData, callback) {
-    projectModel.find({ project_title: reqData.project_title }).remove().then((resData) => {
-        console.log(resData);
-        callback(resData);
-    });
-}
-
-function insert_project(reqData, callback) {
+function create_project(reqData, callback) {
     const newProj = new projectModel({
-        project_title: reqData.project_title,
+        proj_id: 'PROJ' + 'TS' + Date.now() + 'R' + Math.floor(Math.random() * 100),
+        proj_title: reqData.proj_title,
         need_state: reqData.need_state,
         prod_form: reqData.prod_form,
         claim_type: reqData.claim_type,
+        proj_status: reqData.proj_status,
         created_by: reqData.created_by,
         created_on: reqData.created_on,
         mod_by: reqData.mod_by,
@@ -44,9 +25,64 @@ function insert_project(reqData, callback) {
     });
 
     newProj.save().then((resData) => {
-        callback(resData.id);
+        callback({ proj_id: resData.proj_id, success: true });
     }).catch((err) => {
         console.log('err while inserting project ' + err);
-        callback(false);
+        callback({ errorMsg: err.message, success: false });
     });
+}
+
+
+function get_all_projectTitles(callback) {
+    projectModel.find({}, ['proj_title']).then((resData) => {
+        callback({ resData: resData, success: true });
+    }).catch((err) => {
+        console.log('err in get_projects ' + err);
+        callback({ errorMsg: err.message, success: false });
+    });
+}
+
+
+function check_project(reqData) {
+    return projectModel.find({
+        proj_title: reqData.proj_title,
+        prod_form: reqData.prod_form,
+        need_state: reqData.need_state,
+        claim_type: reqData.claim_type
+    });
+}
+
+
+function delete_project(reqData, callback) {
+    projectModel.find({
+        proj_title: reqData.proj_title
+    }).remove().then((resData) => {
+        callback({ resData: resData, success: true });
+    }).catch((err) => {
+        console.log('err while deleting project ' + err);
+        callback({ errorMsg: err.message, success: false });
+    });
+}
+
+
+function update_project_status(proj_id, status) {
+    projectModel.update({ proj_id: proj_id }, {
+        $set: { proj_status: status }
+    }).then((resData) => {
+        callback({ resData: resData, success: true });
+    }).catch((err) => {
+        console.log('err while updating project status ' + err);
+        callback({ errorMsg: err.message, success: false });
+    });
+}
+
+
+function check_dirty_status(proj_id) {
+    return projectModel.find({ proj_id: proj_id });
+    // .then((resData) => {
+    //     callback({ resData: resData, success: true });
+    // }).catch((err) => {
+    //     console.log('err while updating project status ' + err);
+    //     callback({ errorMsg: err.message, success: false });
+    // });
 }

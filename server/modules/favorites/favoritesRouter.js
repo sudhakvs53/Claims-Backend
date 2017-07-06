@@ -16,14 +16,14 @@ export default (router) => {
         });
     });
 
-    router.post('/insert_userFavorite', (req, res) => {
+    router.post('/add_userFavorite', (req, res) => {
         favoritesHandler.insert_userFavorite(req.body, (isSuccess) => {
             if (isSuccess)
                 res.sendStatus(200);
         });
     });
 
-    router.post('/remove_userFavorite', (req, res) => {
+    router.post('/delete_userFavorite', (req, res) => {
         favoritesHandler.remove_userFavorite(req.body, (isSuccess) => {
             if (isSuccess)
                 res.sendStatus(200);

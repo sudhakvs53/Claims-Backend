@@ -13,7 +13,7 @@ export default (router) => {
         });
     });
 
-    router.post('/insert_comment', (req, res) => {
+    router.post('/add_comment', (req, res) => {
         commentsHandler.insert_comment(req.body, (isSuccess) => {
             if (isSuccess)
                 res.sendStatus(200);
