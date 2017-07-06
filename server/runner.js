@@ -26,33 +26,6 @@ if (cluster.isMaster) {
     });
 
 } else {
-    process.on("SIGUSR2", () => {
-        console.log(`SIGUSR2 received, reloading workers`);
-
-        delete require.cache[require.resolve("./server")];
-
-        let i = 0;
-        const workers = Object.keys(cluster.workers);
-
-        const restart = () => {
-            if (i == workers.length) return;
-            console.log(`Killing ${workers[i]}`);
-
-            dbhelper.closeConnection(() => {
-                cluster.workers[workers[i]].disconnect();
-                cluster.workers[workers[i]].on("disconnect", () => {
-                    console.log(`Shutdown complete`);
-                });
-                const newWorker = cluster.fork();
-                newWorker.on("listening", () => {
-                    console.log(`Replacement worker online `);
-                    i++;
-                    restart();
-                });
-            });
-        };
-        restart();
-    });
 
     require('./server');
 

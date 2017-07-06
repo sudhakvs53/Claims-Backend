@@ -4,7 +4,7 @@ import routes from './routes';
 import dbhelper from './helpers/dbhelper';
 
 // ========================== dependecy modules ==========================
-// import cluster from 'cluster';
+import cluster from 'cluster';
 // const numCPUs = require('os').cpus().length;
 
 import bodyParser from 'body-parser';
@@ -54,5 +54,34 @@ process.on('SIGINT', () => {
         process.exit();
     });
 });
+
+process.on("SIGUSR2", () => {
+    console.log(`SIGUSR2 received, reloading workers`);
+
+    delete require.cache[require.resolve("./server")];
+
+    let i = 0;
+    const workers = Object.keys(cluster.workers);
+
+    const restart = () => {
+        if (i == workers.length) return;
+        console.log(`Killing ${workers[i]}`);
+
+        dbhelper.closeConnection(() => {
+            cluster.workers[workers[i]].disconnect();
+            cluster.workers[workers[i]].on("disconnect", () => {
+                console.log(`Shutdown complete`);
+            });
+            const newWorker = cluster.fork();
+            newWorker.on("listening", () => {
+                console.log(`Replacement worker online `);
+                i++;
+                restart();
+            });
+        });
+    };
+    restart();
+});
+
 
 // }
