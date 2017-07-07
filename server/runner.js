@@ -1,5 +1,6 @@
 import dbhelper from './helpers/dbhelper';
 
+import path from 'path';
 import cluster from 'cluster';
 import os from 'os';
 const numCPUs = os.cpus().length;
@@ -27,9 +28,9 @@ if (cluster.isMaster) {
 
     process.on("SIGUSR2", () => {
         console.log(`SIGUSR2 received, reloading workers`);
-        console.log(`before clearing cache ${require.cache[require.resolve("./server")]}`);
-        delete require.cache[require.resolve("./server")];
-        console.log(`after clearing cache ${require.cache[require.resolve("./server")]}`);
+
+        delete require.cache[path.join(__dirname, '/server.js')];
+
         let i = 0;
         const workers = Object.keys(cluster.workers);
 

@@ -6,11 +6,11 @@ import dbhelper from './helpers/dbhelper';
 // ========================== dependecy modules ==========================
 // import cluster from 'cluster';
 // const numCPUs = require('os').cpus().length;
+import path from 'path';
 
 import bodyParser from 'body-parser';
 import express from 'express';
 const app = express();
-
 
 // parsing req/res body to json
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -39,6 +39,7 @@ routes(app);
 //         cluster.fork();
 //     });
 // } else {
+
 // open db connection, when successful start application
 dbhelper.openConnection().then(() => {
     app.listen(dev.PORT, () => {
@@ -55,4 +56,6 @@ process.on('SIGINT', () => {
     });
 });
 
+// console.log(require.cache[path.join(__dirname, '/server.js')]);
 // }
+// console.log(path.join(__dirname, '/server.js'));
