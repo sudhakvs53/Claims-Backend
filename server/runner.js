@@ -37,18 +37,19 @@ if (cluster.isMaster) {
             if (i == workers.length) return;
             console.log(`Killing ${workers[i]}`);
 
-            dbhelper.closeConnection(() => {
-                cluster.workers[workers[i]].disconnect();
-                cluster.workers[workers[i]].on("disconnect", () => {
-                    console.log(`Shutdown complete`);
-                });
-                const newWorker = cluster.fork();
-                newWorker.on("listening", () => {
-                    console.log(`Replacement worker online `);
-                    i++;
-                    restart();
-                });
+            // dbhelper.closeConnection(() => {
+            cluster.workers[workers[i]].disconnect();
+            cluster.workers[workers[i]].on("disconnect", () => {
+                console.log(`Shutdown complete`);
+                dbhelper.closeConnection();
             });
+            const newWorker = cluster.fork();
+            newWorker.on("listening", () => {
+                console.log(`Replacement worker online `);
+                i++;
+                restart();
+            });
+            // });
         };
         restart();
     });
