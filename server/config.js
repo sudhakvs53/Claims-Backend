@@ -1,5 +1,5 @@
 export const dev = {
-    PORT: 8081,
+    PORT: 3000,
     dbUrl: {
         // mLabDBurl: 'mongodb://dev:dev@ds143201.mlab.com:43201/claimsdb',
         localDBUrl: 'mongodb://localhost:27017/claimsDB',

@@ -27,9 +27,9 @@ if (cluster.isMaster) {
 
     process.on("SIGUSR2", () => {
         console.log(`SIGUSR2 received, reloading workers`);
-
+        console.log(`before clearing cache ${require.cache[require.resolve("./server")]}`);
         delete require.cache[require.resolve("./server")];
-
+        console.log(`after clearing cache ${require.cache[require.resolve("./server")]}`);
         let i = 0;
         const workers = Object.keys(cluster.workers);
 
@@ -39,10 +39,12 @@ if (cluster.isMaster) {
 
             // dbhelper.closeConnection(() => {
             cluster.workers[workers[i]].disconnect();
-            cluster.workers[workers[i]].on("disconnect", () => {
+
+            cluster.on("disconnect", () => {
                 console.log(`Shutdown complete`);
                 dbhelper.closeConnection();
             });
+
             const newWorker = cluster.fork();
             newWorker.on("listening", () => {
                 console.log(`Replacement worker online `);
