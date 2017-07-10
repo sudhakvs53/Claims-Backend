@@ -1,6 +1,4 @@
 import dbhelper from './helpers/dbhelper';
-
-import path from 'path';
 import cluster from 'cluster';
 import os from 'os';
 const numCPUs = os.cpus().length;
@@ -18,7 +16,6 @@ if (cluster.isMaster) {
         console.log(`Worker with process id ${worker.process.pid} is online `);
     });
 
-
     cluster.on('exit', (worker, code, signal) => {
         if (code != 0) {
             console.log(`Worker ${worker.process.pid} died with code ${code} and signal ${signal} `);
@@ -29,9 +26,7 @@ if (cluster.isMaster) {
 
     process.on("SIGUSR2", () => {
         console.log(`SIGUSR2 received, reloading workers`);
-
-        delete require.cache[path.join(__dirname, '/server.js')];
-
+        delete require.cache[require.resolve('./server')];
         let i = 0;
 
         const restart = () => {
@@ -40,10 +35,8 @@ if (cluster.isMaster) {
 
             dbhelper.closeConnection(() => {
                 workers[i].disconnect();
-
                 cluster.on("disconnect", () => {
                     console.log(`Shutdown complete`);
-                    // dbhelper.closeConnection();
                 });
 
                 const newWorker = cluster.fork();
@@ -58,7 +51,5 @@ if (cluster.isMaster) {
     });
 
 } else {
-
     require('./server');
-
 }

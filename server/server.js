@@ -4,10 +4,6 @@ import routes from './routes';
 import dbhelper from './helpers/dbhelper';
 
 // ========================== dependecy modules ==========================
-// import cluster from 'cluster';
-// const numCPUs = require('os').cpus().length;
-import path from 'path';
-
 import bodyParser from 'body-parser';
 import express from 'express';
 const app = express();
@@ -20,25 +16,6 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // pass app object to routes method for registering routes
 routes(app);
-
-// if (cluster.isMaster) {
-
-//     console.log(`Master ${process.pid} is running, number of workers ${numCPUs}`);
-
-//     for (let i = 0; i < numWorkers; i++) {
-//         cluster.fork();
-//     }
-
-//     cluster.on('online', (worker) => {
-//         console.log(`Worker ${worker.process.pid} is online`);
-//     });
-
-//     cluster.on('exit', (worker, code, signal) => {
-//         console.log(`Worker ${worker.process.pid} died with code ${code} and signal ${signal} `);
-//         console.log('Staring a new worker');
-//         cluster.fork();
-//     });
-// } else {
 
 // open db connection, when successful start application
 dbhelper.openConnection().then(() => {
@@ -55,7 +32,3 @@ process.on('SIGINT', () => {
         process.exit();
     });
 });
-
-// console.log(require.cache[path.join(__dirname, '/server.js')]);
-// }
-// console.log(path.join(__dirname, '/server.js'));
