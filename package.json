@@ -2,18 +2,16 @@
     "name": "claims_app",
     "version": "1.0.0",
     "description": "claims management application API server",
-    "main": "server.js",
+    "main": "runner.js",
     "scripts": {
-        "start": "nodemon server/runner.js --exec babel-node",
-        "test-start": "babel-node server/runner.js --exec node",
-        "aws:start": "node ./build/server.js",
+        "start": "nodemon server/server.js --exec babel-node",
         "build-server": "babel server -d build",
-        "windows:clean": "rmdir /s build && mkdir build",
+        "aws:start": "NODE_ENV=prod node ./build/runner.js",
+        "aws:forever": "NODE_ENV=prod forever start -a ./build/runner.js",
         "aws:clean": "rm -rf build && mkdir build",
-        "windows:build": "npm run windows:clean && npm run build-server",
         "aws:build": "npm run aws:clean && npm run build-server",
-        "build": "npm run windows:clean && npm run build-server",
-        "debug": "node_modules/babel-cli/bin/babel-node.js --debug --presets es2015 -- server.js --debug"
+        "windows:clean": "rmdir /s build && mkdir build",
+        "windows:build": "npm run windows:clean && npm run build-server"
     },
     "keywords": [
         "claims",
@@ -26,28 +24,21 @@
     "author": "Abinash Patra",
     "license": "ISC",
     "dependencies": {
-        "@uirouter/angularjs": "^1.0.4",
-        "angular": "^1.6.4",
         "body-parser": "^1.17.2",
-        "bootstrap": "^4.0.0-alpha.6",
         "cluster": "^0.7.7",
         "express": "^4.15.3",
-        "font-awesome": "^4.7.0",
         "jquery": "^3.2.1",
-        "lodash": "^4.17.4",
         "mongoose": "^4.10.6",
         "os": "^0.1.1",
         "tether": "^1.4.0"
     },
     "devDependencies": {
         "babel-eslint": "^7.2.3",
+        "babel-polyfill": "^6.23.0",
         "babel-preset-es2015": "^6.24.1",
-        "babel-register": "^6.24.1",
-        "debug": "^2.6.8",
+        "babel-preset-stage-0": "^6.24.1",
         "eslint": "^4.0.0",
-        "eslint-plugin-angular": "^2.5.0",
         "eslint-plugin-node": "^5.0.0",
-        "nodemon": "^1.11.0",
-        "webpack": "^2.6.1"
+        "nodemon": "^1.11.0"
     }
 }

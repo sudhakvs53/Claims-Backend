@@ -2,51 +2,49 @@ import projectHandler from './projectHandler';
 
 export default (router) => {
 
-    router.post('/create_project', (req, res) => {
-        projectHandler.check_project(req.body).then((resData) => {
-            if (resData.length > 0)
-                res.status(400).send('Project already exists');
-            else {
-                projectHandler.create_project(req.body, (createProjRes) => {
-                    if (createProjRes.success)
-                        res.status(200).send({ proj_id: createProjRes.proj_id });
-                    else {
-                        res.status(500).send(createProjRes.errorMsg);
-                    }
-                });
+
+    router.post('/create_project', async(req, res, next) => {
+        try {
+            const chkProjectRes = await projectHandler.check_project(req.body);
+            if (chkProjectRes.length > 0) {
+                next({ status: 400, message: error.message });
+            } else {
+                const createProjRes = await projectHandler.create_project(req.body);
+                res.status(500).send({ proj_id: createProjRes.proj_id });
             }
-        });
+        } catch (error) {
+            next({ status: 500, message: error.message });
+        }
     });
 
 
-    router.get('/get_all_projectTitles', (req, res) => {
-        projectHandler.get_all_projectTitles((getProjTitlesRes) => {
-            if (getProjTitlesRes.success)
-                res.status(200).send(getProjTitlesRes.resData);
-            else {
-                res.status(500).send(getProjTitlesRes.errorMsg);
-            }
-        });
+    router.get('/get_all_projectTitles', async(req, res, next) => {
+        try {
+            const resData = await projectHandler.get_all_projectTitles();
+            res.status(200).send(resData);
+        } catch (error) {
+            next(error.message);
+        }
     });
 
-    router.get('/get_all_projectTitles2', (req, res) => {
-        projectHandler.get_all_projectTitles((getProjTitlesRes) => {
-            if (getProjTitlesRes.success)
-                res.status(200).send(getProjTitlesRes.resData);
-            else {
-                res.status(500).send(getProjTitlesRes.errorMsg);
-            }
-        });
+
+    router.post('/delete_project', async(req, res, next) => {
+        try {
+            await projectHandler.delete_project(req.body);
+            res.status(200).send('Delete successful');
+        } catch (error) {
+            next({ status: 500, message: error.message });
+        }
     });
 
-    router.post('/delete_project', (req, res) => {
-        projectHandler.delete_project(req.body, (delProjRes) => {
-            if (delProjRes.success)
-                res.status(200).send('Delete successful');
-            else {
-                res.status(500).send(delProjRes.errorMsg);
-            }
-        });
+
+    router.post('/update_project_status', async(req, res, next) => {
+        try {
+            await projectHandler.update_project_status(req.body.proj_id, req.body.status);
+            res.status(200).send('Project status updated successfully');
+        } catch (error) {
+            next({ status: 500, message: error.message });
+        }
     });
 
 };

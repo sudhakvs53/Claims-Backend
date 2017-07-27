@@ -1,8 +1,10 @@
-import dbhelper from './helpers/dbhelper';
+import 'babel-polyfill';
+
+import dbHandler from './handlers/dbHandler';
 import cluster from 'cluster';
 import os from 'os';
-const numCPUs = os.cpus().length;
-let workers = [];
+const numCPUs = 1; //os.cpus().length
+const workers = [];
 
 if (cluster.isMaster) {
 
@@ -33,7 +35,7 @@ if (cluster.isMaster) {
             if (i == workers.length) return;
             console.log(`Killing ${workers[i]}`);
 
-            dbhelper.closeConnection(() => {
+            dbHandler.closeConnection(() => {
                 workers[i].disconnect();
                 cluster.on("disconnect", () => {
                     console.log(`Shutdown complete`);

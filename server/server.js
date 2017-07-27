@@ -1,7 +1,10 @@
+// import 'babel-polyfill';
+
 // ========================== custom modules ==========================
 import { dev } from './config';
 import routes from './routes';
-import dbhelper from './helpers/dbhelper';
+import errHandler from './handlers/errorHandler';
+import dbHandler from './handlers/dbHandler';
 
 // ========================== dependecy modules ==========================
 import bodyParser from 'body-parser';
@@ -14,11 +17,15 @@ app.use(bodyParser.json({ limit: '50mb' }));
 // for parsing the url encoded data using qs library
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
+
 // pass app object to routes method for registering routes
 routes(app);
 
+// error handling for all routes
+errHandler(app);
+
 // open db connection, when successful start application
-dbhelper.openConnection().then(() => {
+dbHandler.openConnection().then(() => {
     app.listen(dev.PORT, () => {
         console.log(`server started ${dev.PORT} `);
         console.log(`Worker ${process.pid} started `);
@@ -28,7 +35,7 @@ dbhelper.openConnection().then(() => {
 // kill process when Ctrl+C is hit
 process.on('SIGINT', () => {
     console.log('bye bye !');
-    dbhelper.closeConnection(() => {
+    dbHandler.closeConnection(() => {
         process.exit();
     });
 });

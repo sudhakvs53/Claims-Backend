@@ -10,7 +10,7 @@ export default {
 };
 
 
-function create_project(reqData, callback) {
+async function create_project(reqData, callback) {
     const newProj = new projectModel({
         proj_id: 'PROJ' + 'TS' + Date.now() + 'R' + Math.floor(Math.random() * 100),
         proj_title: reqData.proj_title,
@@ -33,17 +33,12 @@ function create_project(reqData, callback) {
 }
 
 
-function get_all_projectTitles(callback) {
-    projectModel.find({}, ['proj_title']).then((resData) => {
-        callback({ resData: resData, success: true });
-    }).catch((err) => {
-        console.log('err in get_projects ' + err);
-        callback({ errorMsg: err.message, success: false });
-    });
+async function get_all_projectTitles() {
+    return projectModel.find({}, { '_id': 0, 'proj_id': 1, 'proj_title': 1 });
 }
 
 
-function check_project(reqData) {
+async function check_project(reqData) {
     return projectModel.find({
         proj_title: reqData.proj_title,
         prod_form: reqData.prod_form,
@@ -53,19 +48,12 @@ function check_project(reqData) {
 }
 
 
-function delete_project(reqData, callback) {
-    projectModel.find({
-        proj_title: reqData.proj_title
-    }).remove().then((resData) => {
-        callback({ resData: resData, success: true });
-    }).catch((err) => {
-        console.log('err while deleting project ' + err);
-        callback({ errorMsg: err.message, success: false });
-    });
+async function delete_project(reqData) {
+    return projectModel.find({ proj_title: reqData.proj_title }).remove();
 }
 
 
-function update_project_status(proj_id, status) {
+async function update_project_status(proj_id, status) {
     projectModel.update({ proj_id: proj_id }, {
         $set: { proj_status: status }
     }).then((resData) => {
@@ -77,12 +65,6 @@ function update_project_status(proj_id, status) {
 }
 
 
-function check_dirty_status(proj_id) {
+async function check_dirty_status(proj_id) {
     return projectModel.find({ proj_id: proj_id });
-    // .then((resData) => {
-    //     callback({ resData: resData, success: true });
-    // }).catch((err) => {
-    //     console.log('err while updating project status ' + err);
-    //     callback({ errorMsg: err.message, success: false });
-    // });
 }
