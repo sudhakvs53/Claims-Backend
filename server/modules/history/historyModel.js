@@ -3,9 +3,10 @@ const schema = mongoose.Schema;
 
 const historySchema = new schema({
     claim_name: { type: String },
+    history_id: { type: String },
     claim_id: { type: String, required: true },
     description: { type: String },
-    date: { type: Date }
+    modified_on: { type: Date }
 });
 
 const historyModel = mongoose.model('history', historySchema);

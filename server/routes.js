@@ -9,7 +9,7 @@ const routes = [
     require('./modules/favorites/favoritesRouter'),
     require('./modules/history/historyRouter'),
     require('./modules/login/loginRouter'),
-    require('./modules/loginFather/loginFatherRouter')
+    require('./modules/substantiation/substantiationRouter')
 ];
 
 export default (app) => {
