@@ -27,10 +27,8 @@
         "body-parser": "^1.17.2",
         "cluster": "^0.7.7",
         "express": "^4.15.3",
-        "jquery": "^3.2.1",
         "mongoose": "^4.10.6",
-        "os": "^0.1.1",
-        "tether": "^1.4.0"
+        "os": "^0.1.1"
     },
     "devDependencies": {
         "babel-eslint": "^7.2.3",

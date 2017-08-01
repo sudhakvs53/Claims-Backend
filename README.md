@@ -1,0 +1,1 @@
+Nodejs API server for Claims application implemented with ES6, ESlint, and Cluster
