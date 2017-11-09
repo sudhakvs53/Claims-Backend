@@ -7,27 +7,17 @@ export default {
 };
 
 
-function get_project_comments(reqData, callback) {
-    commentModel.find({ project_title: reqData.project_title }).then((resData) => {
-        callback(resData);
-    }).catch((err) => {
-        console.log('err while get_project_comments call ' + err);
-        callback(false);
-    });
+async function get_project_comments(project_title) {
+    return commentModel.find({ project_title: project_title });
 }
 
 
-function get_claim_comments(reqData, callback) {
-    commentModel.find({ claim_name: reqData.claim_name }).then((resData) => {
-        callback(resData);
-    }).catch((err) => {
-        console.log('err while get_claim_comments call ' + err);
-        callback(false);
-    });
+async function get_claim_comments(claim_name) {
+    return commentModel.find({ claim_name: claim_name });
 }
 
 
-function insert_comment(reqData, callback) {
+async function insert_comment(reqData) {
     const newComment = new commentModel({
         claim_id: reqData.claim_id,
         claim_name: reqData.claim_name,
@@ -37,10 +27,5 @@ function insert_comment(reqData, callback) {
         comment_text: reqData.comment_text
     });
 
-    newComment.save().then((resData) => {
-        callback(resData);
-    }).catch((err) => {
-        console.log('err while insert_comment call ' + err);
-        callback(false);
-    });
+    return newComment.save();
 }

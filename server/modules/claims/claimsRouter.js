@@ -59,6 +59,7 @@ export default (router) => {
             const resData = await claimsHandler.get_claim_names();
             res.status(200).send(resData);
         } catch (error) {
+            console.log('err msg ' + error.message);
             next(error.message);
         }
     });
@@ -70,6 +71,17 @@ export default (router) => {
             res.status(200).send(resData);
         } catch (error) {
             next(error.message);
+        }
+    });
+
+
+    router.get('/search', (req, res, next) => {
+        try {
+            claimsHandler.search(req.get("searchTerm"), (resData) => {
+                res.status(200).json({ success: true, data: resData });
+            });
+        } catch (error) {
+            res.status(500);
         }
     });
 

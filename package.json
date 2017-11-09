@@ -7,7 +7,7 @@
         "start": "nodemon server/server.js --exec babel-node",
         "build-server": "babel server -d build",
         "aws:start": "NODE_ENV=prod node ./build/runner.js",
-        "aws:forever": "NODE_ENV=prod forever start -a ./build/runner.js",
+        "forever:start": "NODE_ENV=prod forever start -a ./build/runner.js",
         "aws:clean": "rm -rf build && mkdir build",
         "aws:build": "npm run aws:clean && npm run build-server",
         "windows:clean": "rmdir /s build && mkdir build",
@@ -26,7 +26,9 @@
     "dependencies": {
         "body-parser": "^1.17.2",
         "cluster": "^0.7.7",
+        "elasticsearch": "^13.2.0",
         "express": "^4.15.3",
+        "mongoosastic": "^4.3.0",
         "mongoose": "^4.10.6",
         "os": "^0.1.1"
     },

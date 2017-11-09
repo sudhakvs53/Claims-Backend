@@ -1,10 +1,19 @@
 // import 'babel-polyfill';
 
+// if (process.env.NODE_ENV === 'prod') {
+//     require('babel-polyfill');
+// }
+
 // ========================== custom modules ==========================
-import { dev } from './config';
-import routes from './routes';
 import errHandler from './handlers/errorHandler';
 import dbHandler from './handlers/dbHandler';
+
+if (process.env.NODE_ENV === 'prod') {
+    require('babel-polyfill');
+}
+
+import { dev } from './config';
+import routes from './routes';
 
 // ========================== dependecy modules ==========================
 import bodyParser from 'body-parser';
@@ -16,7 +25,6 @@ app.use(bodyParser.json({ limit: '50mb' }));
 
 // for parsing the url encoded data using qs library
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
 
 // pass app object to routes method for registering routes
 routes(app);

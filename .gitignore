@@ -5,6 +5,7 @@ package-lock.json
 /node_modules
 npm-debug.log
 /.vscode
+/server/config.json
 
 # alter the following folder between server and build while pushing code to git or heroku respectively
 /build

@@ -14,7 +14,8 @@ export default {
     get_project_claims,
     // get_claims_by_pagination,
     get_claims,
-    get_claims_count
+    get_claims_count,
+    search
 };
 
 
@@ -68,7 +69,9 @@ async function create_claim(claimData) {
         project_status: claimData.project_status
     });
 
-    return newClaim.save();
+    const resData = await newClaim.save();
+    await book.on('es-indexed', function(err, res) {});
+    return resData;
 }
 
 
@@ -81,6 +84,17 @@ async function update_claim(reqData) {
     return claimsModel.update({ 'claim_id': reqData.claim_id }, reqData);
 }
 
+
+function search(searchTerm, callback) {
+    claimsModel.search({
+        query_string: { query: searchTerm }
+    }, { hydrate: true }, function(err, resData) {
+        if (err) {
+            console.log(err);
+        }
+        callback(resData);
+    });
+}
 
 async function get_claim_names() {
     return claimsModel.find({}, { '_id': 0, 'claim_name': 1, 'benefit_area': 1 });

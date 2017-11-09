@@ -21,8 +21,9 @@ export default (router) => {
 
     router.get('/get_projectTitles', async(req, res, next) => {
         try {
-            const resData = await projectHandler.get_projectTitles();
-            res.status(200).send(resData);
+            throw new Error("some err fired");
+            // const resData = await projectHandler.get_projectTitles();
+            // res.status(200).send(resData);
         } catch (error) {
             next(error.message);
         }
