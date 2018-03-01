@@ -70,7 +70,7 @@ async function create_claim(claimData) {
     });
 
     const resData = await newClaim.save();
-    await book.on('es-indexed', function(err, res) {});
+    //await book.on('es-indexed', function(err, res) {});
     return resData;
 }
 

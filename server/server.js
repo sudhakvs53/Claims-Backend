@@ -26,6 +26,12 @@ app.use(bodyParser.json({ limit: '50mb' }));
 // for parsing the url encoded data using qs library
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, project_id");
+    next();
+});
+
 // pass app object to routes method for registering routes
 routes(app);
 
