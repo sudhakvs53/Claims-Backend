@@ -11,6 +11,7 @@ export default {
     update_claim,
     delete_claim,
     get_claim_names,
+    //get_claim_details,
     get_project_claims,
     // get_claims_by_pagination,
     get_claims,
@@ -99,6 +100,10 @@ function search(searchTerm, callback) {
 async function get_claim_names() {
     return claimsModel.find({}, { '_id': 0, 'claim_name': 1, 'benefit_area': 1 });
 }
+
+// async function get_claim_details(claim_id) {
+//     return claimsModel.find({ 'claim_id': claim_id }, { '_id': 0, 'claim_id':1, 'claim_name': 1, 'benefit_area': 1, 'region': 1  });
+// }
 
 
 async function get_project_claims(project_id) {

@@ -6,6 +6,7 @@ export default {
     flush_duplicate_substantiation,
     create_substantiation,
     update_substantiation,
+    get_claim_substantiation,
     delete_substantiation,
     // edit_claim_create_substantiation,
     // edit_claim_update_substantiation,
@@ -47,6 +48,10 @@ async function delete_substantiation(substantiation_id) {
 
 async function update_substantiation(reqData) {
     return substantiationTempModel.update({ substantiation_id: reqData.substantiation_id }, reqData);
+}
+
+async function get_claim_substantiation(claim_id) {
+    return substantiationTempModel.find({ 'claim_id': claim_id }, { '_id': 0 });
 }
 
 

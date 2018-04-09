@@ -7,7 +7,7 @@ export default (router) => {
 
     router.post('/create_claim', async(req, res, next) => {
         try {
-            const resClaimData = await claimsHandler.create_claim(req.body); -
+            const resClaimData = await claimsHandler.create_claim(req.body);
             res.status(200).send({ claim_id: resClaimData.claim_id });
         } catch (error) {
             next(error.message);
@@ -63,6 +63,15 @@ export default (router) => {
             next(error.message);
         }
     });
+
+    // router.get('/get_claim_details', async(req, res, next) => {
+    //     try {
+    //         const resData = await claimsHandler.get_claim_details(req.get("claim_id"));
+    //         res.status(200).send(resData);
+    //     } catch (error) {
+    //         next(error.message);
+    //     }
+    // });
 
 
     router.get('/get_project_claims', async(req, res, next) => {

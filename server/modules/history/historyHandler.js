@@ -6,36 +6,43 @@ export default {
     insert_history
 };
 
-function get_project_history(reqData, callback) {
-    historyModel.find({}).then((resData) => {
+async function get_project_history(reqData, callback) {
+    historyModel.find({project_title: reqData.project_title}).then((resData) => {
         callback(resData);
     }).catch((err) => {
-        console.log('err while get_all_history call ' + err);
         callback(false);
     });
 }
 
-function get_claim_history(reqData, callback) {
-    historyModel.find({}).then((resData) => {
-        callback(resData);
-    }).catch((err) => {
-        console.log('err while get_claim_history call ' + err);
-        callback(false);
-    });
-}
+// async function get_claim_history(reqData, callback) {
+//     console.log("reqData.claim_id: "+reqData.claim_id);
+//     return historyModel.find({claim_id: reqData.claim_id}).then((resData) => {
+//         console.log("resdata: "+resData);
+//         //callback(resData);
+//     }).catch((err) => {
+//         console.log('err while get_claim_history call ' + err);
+//         //callback(false);
+//     });
+// }
 
-function insert_history(reqData, callback) {
+async function get_claim_history(claim_id) {
+    console.log("claim_id: "+claim_id);
+    return historyModel.find({claim_id: claim_id}, { '_id': 0 });
+};
+
+
+async function insert_history(reqData, callback) {
     const newHistory = new historyModel({
         claim_name: reqData.claim_name,
         claim_id: reqData.claim_id,
         description: reqData.description,
-        date: reqData.date
+        modified_on: reqData.modified_on
     });
 
     newHistory.save().then((resData) => {
         callback(resData);
     }).catch((err) => {
-        console.log('err while get_claim_history call ' + err);
+        console.log('err while insert_history call ' + err);
         callback(false);
     });
 }
