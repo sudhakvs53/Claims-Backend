@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import config from './../config.json';
-const dburl = config.dev.dbUrl.mongoAtlasUrl; //localDBUrl for local, mLabDBurl for cloud connection, mongoAtlasURL for latest cloud
+var config = require('config');
+const dburl = config.dbConfig.url;
 
 const db = mongoose.connection;
 mongoose.Promise = global.Promise;

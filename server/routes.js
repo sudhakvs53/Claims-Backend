@@ -8,7 +8,7 @@ const routes = [
     require('./modules/comments/commentsRouter'),
     require('./modules/favorites/favoritesRouter'),
     // require('./modules/history/historyRouter'),
-    require('./modules/login/loginRouter'),
+    require('./modules/auth/authRouter'),
     require('./modules/substantiation/substantiationRouter')
 ];
 
