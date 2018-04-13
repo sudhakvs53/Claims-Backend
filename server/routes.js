@@ -6,9 +6,9 @@ const routes = [
     require('./modules/projects/projectRouter'),
     require('./modules/claims/claimsRouter'),
     require('./modules/comments/commentsRouter'),
-    require('./modules/favorites/favoritesRouter'),
-    // require('./modules/history/historyRouter'),
+    require('./modules/favorites/favoritesRouter'),    
     require('./modules/auth/authRouter'),
+    require('./modules/history/historyRouter'),
     require('./modules/substantiation/substantiationRouter')
 ];
 

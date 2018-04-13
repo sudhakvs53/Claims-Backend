@@ -14,6 +14,16 @@ export default (router) => {
         }
     });
 
+    router.get('/get_claim_substantiation', async(req, res, next) => {
+        try {
+            const resData = await substantiationHandler.get_claim_substantiation(req.get("claim_id"));
+            res.status(200).send(resData);
+        } catch (error) {
+            console.log('err msg ' + error.message);
+            next(error.message);
+        }
+    });
+
 
     router.post('/update_substantiation', async(req, res, next) => {
         try {

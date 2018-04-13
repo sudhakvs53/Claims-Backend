@@ -14,12 +14,13 @@ export default (router) => {
         try {
             const resData = await commentsHandler.get_claim_comments(req.get('claim_name'));
             res.status(200).json({ success: true, data: resData });
+            console.log("resData: "+resData[0]);
         } catch (error) {
             next(error.message);
         }
     });
 
-    router.post('/add_comment', async(req, res, next) => {
+    router.post('/insert_comment', async(req, res, next) => {
         try {
             await commentsHandler.insert_comment(req.body);
             res.status(200).json({ success: true, data: 'Comment added successfully' });

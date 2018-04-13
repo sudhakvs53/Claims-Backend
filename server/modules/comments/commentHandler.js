@@ -20,6 +20,7 @@ async function get_claim_comments(claim_name) {
 async function insert_comment(reqData) {
     const newComment = new commentModel({
         claim_id: reqData.claim_id,
+        comment_id: reqData.comment_id,
         claim_name: reqData.claim_name,
         project_title: reqData.project_title,
         commented_by: reqData.commented_by,

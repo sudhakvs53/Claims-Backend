@@ -11,7 +11,7 @@ export default (router) => {
                 next(error.message);
             } else {
                 const createProjRes = await projectHandler.create_project(req.body);
-                res.status(500).send({ project_id: createProjRes.project_id });
+                res.status(200).send({ project_id: createProjRes.project_id });
             }
         } catch (error) {
             next(error.message);
@@ -24,6 +24,15 @@ export default (router) => {
             throw new Error("some err fired");
             // const resData = await projectHandler.get_projectTitles();
             // res.status(200).send(resData);
+        } catch (error) {
+            next(error.message);
+        }
+    });
+
+    router.get('/check_project', async(req, res, next) => {
+        try {
+             const resData = await projectHandler.check_project(req.body);
+             res.status(200).send(resData);
         } catch (error) {
             next(error.message);
         }
