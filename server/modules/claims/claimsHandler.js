@@ -13,6 +13,7 @@ export default {
     get_claim_names,
     //get_claim_details,
     get_project_claims,
+    getAllClaims,
     // get_claims_by_pagination,
     get_claims,
     get_claims_count,
@@ -89,7 +90,7 @@ async function update_claim(reqData) {
 function search(searchTerm, callback) {
     claimsModel.search({
         query_string: { query: searchTerm }
-    }, { hydrate: true }, function(err, resData) {
+    }, { hydrate: true }, function (err, resData) {
         if (err) {
             console.log(err);
         }
@@ -110,6 +111,9 @@ async function get_project_claims(project_id) {
     return claimsModel.find({ 'project_id': project_id }, { '_id': 0 });
 }
 
+async function getAllClaims() {
+    return claimsModel.find({ 'benefit_area': "Cleansing" });
+}
 
 async function get_claims_count(filterList) {
     let qry = { $and: [] };

@@ -5,7 +5,7 @@ import substantiationHandler from './../substantiation/substantiationHandler';
 export default (router) => {
 
 
-    router.post('/create_claim', async(req, res, next) => {
+    router.post('/create_claim', async (req, res, next) => {
         try {
             const resClaimData = await claimsHandler.create_claim(req.body);
             res.status(200).send({ claim_id: resClaimData.claim_id });
@@ -16,7 +16,7 @@ export default (router) => {
 
 
     // can optimize code, take check_dirty_status into handler, internal call, rename appropriately
-    router.post('/update_project_status', async(req, res, next) => {
+    router.post('/update_project_status', async (req, res, next) => {
         try {
             const projectArr = await claimsHandler.check_dirty_status(req.body.project_id);
             if (claimsHandler.check_duplicate_status(projectArr, req.body.project_status)) {
@@ -31,7 +31,7 @@ export default (router) => {
     });
 
 
-    router.post('/update_claim', async(req, res, next) => {
+    router.post('/update_claim', async (req, res, next) => {
         try {
             await substantiationHandler.commit_substantiation(req.body.claim_id);
             await claimsHandler.update_claim(req.body);
@@ -43,7 +43,7 @@ export default (router) => {
 
 
 
-    router.post('/delete_claim', async(req, res, next) => {
+    router.post('/delete_claim', async (req, res, next) => {
         try {
             const resDelClaim = await claimsHandler.delete_claim(req.body.claim_id);
             await projectHandler.delete_project_claim(req.body.project_id, resDelClaim.claim_id);
@@ -54,7 +54,7 @@ export default (router) => {
     });
 
 
-    router.get('/get_claim_names', async(req, res, next) => {
+    router.get('/get_claim_names', async (req, res, next) => {
         try {
             const resData = await claimsHandler.get_claim_names();
             res.status(200).send(resData);
@@ -74,7 +74,7 @@ export default (router) => {
     // });
 
 
-    router.get('/get_project_claims', async(req, res, next) => {
+    router.get('/get_project_claims', async (req, res, next) => {
         try {
             const resData = await claimsHandler.get_project_claims(req.get("project_id"));
             res.status(200).send(resData);
@@ -83,6 +83,14 @@ export default (router) => {
         }
     });
 
+    router.get('/get_all_claims', async (req, res, next) => {
+        try {
+            const resData = await claimsHandler.getAllClaims();
+            res.status(200).send(resData);
+        } catch (error) {
+            next(error.message);
+        }
+    });
 
     router.get('/search', (req, res, next) => {
         try {
@@ -95,7 +103,7 @@ export default (router) => {
     });
 
 
-    router.get('/get_claims_by_pagination', async(req, res, next) => {
+    router.get('/get_claims_by_pagination', async (req, res, next) => {
         try {
             const totalCount = await claimsHandler.get_claims_count();
             const resData = await claimsHandler.get_claims_by_pagination(parseInt(req.get("pageNumber")), parseInt(req.get("pageSize")));
@@ -106,7 +114,7 @@ export default (router) => {
     });
 
 
-    router.post('/get_claims', async(req, res, next) => {
+    router.post('/get_claims', async (req, res, next) => {
         try {
             const resData = await claimsHandler.get_claims(req.body.filterList, req.body.pageNumber, req.body.pageSize);
             const totalCount = await claimsHandler.get_claims_count(req.body.filterList);
